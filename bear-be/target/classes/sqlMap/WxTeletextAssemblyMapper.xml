@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bear.web.mapper.WxTeletextAssemblyMapper">
+    <resultMap id="BaseResultMap" type="com.bear.web.entity.WxTeletextAssembly">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="media_id" property="mediaId" jdbcType="VARCHAR"/>
+        <result column="teletext_id" property="teletextId" jdbcType="INTEGER"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="create_on" property="createon" jdbcType="VARCHAR"/>
+        <result column="update_on" property="updateon" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="tableName">wx_teletext_assembly</sql>
+    <sql id="base_column">
+        media_id, teletext_id, store_id, create_on, update_on, state
+    </sql>
+    <sql id="result_column">
+        id,
+        <include refid="base_column"/>
+    </sql>
+
+    <insert id="insert" parameterType="com.bear.web.entity.WxTeletextAssembly">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        insert into
+        <include refid="tableName"/>
+        values (#{id}, #{mediaId}, #{teletextId}, #{storeId}, #{createon},
+        #{updateon}, #{state})
+    </insert>
+
+    <insert id="insertByList" parameterType="java.util.List">
+        insert into
+        <include refid="tableName"/>
+        (<include refid="base_column"/>)
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator="union all">
+            select
+            <trim suffixOverrides=",">
+                #{item.mediaId},
+                #{item.teletextId},
+                #{item.storeId},
+                #{item.createon},
+                #{item.updateon},
+                #{item.state}
+            </trim>
+        </foreach>
+    </insert>
+
+
+</mapper>

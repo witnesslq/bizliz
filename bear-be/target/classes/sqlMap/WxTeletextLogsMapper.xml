@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bear.web.mapper.WxTeletextLogsMapper">
+    <resultMap id="BaseResultMap" type="com.bear.web.entity.WxTeletextLogs">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="promotion_type_id" property="promotionTypeId" jdbcType="INTEGER"/>
+        <result column="teletext_id" property="teletextId" jdbcType="INTEGER"/>
+        <result column="category" property="category" jdbcType="INTEGER"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="create_on" property="createon" jdbcType="VARCHAR"/>
+        <result column="update_on" property="updateon" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="actionDesResult" type="com.bear.web.dto.WxTeletextActionDesDto">
+        <result column="promotion_type_id" property="promotionTypeId" jdbcType="INTEGER"/>
+        <result column="teletext_id" property="teletextId" jdbcType="INTEGER"/>
+        <result column="category" property="category" jdbcType="INTEGER"/>
+        <result column="num" property="count" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="tableName">
+        wx_teletext_logs
+    </sql>
+
+    <sql id="defaultState">0</sql>
+
+    <insert id="insert" parameterType="com.bear.web.entity.WxTeletextLogs">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS pbsId
+        </selectKey>
+        insert into <include refid="tableName"/>
+        (promotion_type_id, teletext_id, category, store_id, create_on, update_on, state)
+        values(#{promotionTypeId}, #{teletextId}, #{category}, #{storeId}, #{createon}, #{updateon}, #{state})
+    </insert>
+
+    <update id="updateState" parameterType="java.util.Map" >
+        update <include refid="tableName"/>
+        set state = #{state}
+        where id = #{id}
+        and state = <include refid="defaultState"/>
+    </update>
+
+    <select id="selectByStoreId" parameterType="java.lang.Integer" resultMap="actionDesResult">
+        select promotion_type_id, teletext_id, category, count(*) as num
+        from <include refid="tableName"/>
+        where store_id = #{storeId} and state = <include refid="defaultState"/>
+        group by category
+    </select>
+
+    <select id="selectByTeletextId" parameterType="java.lang.Integer" resultMap="actionDesResult">
+        select promotion_type_id, teletext_id, category, count(*) as num
+        from <include refid="tableName"/>
+        where teletext_id = #{teletextId} and state = <include refid="defaultState"/>
+        group by category
+    </select>
+
+    <select id="isExistsDownloads" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*) from  <include refid="tableName"/>
+        where store_id = #{storeId} and category = #{category} and teletext_id = #{teletextId}
+        and state = <include refid="defaultState"/>
+    </select>
+
+</mapper>

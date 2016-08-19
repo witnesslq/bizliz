@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bear.web.mapper.WxMediaLogsMapper" >
+    <resultMap id="BaseResultMap" type="com.bear.web.entity.WxMediaLogs" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="media_id" property="mediaId" jdbcType="VARCHAR" />
+        <result column="msg_id" property="msgId" jdbcType="INTEGER" />
+        <result column="msg_status" property="msgStatus" jdbcType="VARCHAR" />
+        <result column="sent_count" property="sentCount" jdbcType="INTEGER" />
+        <result column="error_count" property="errorCount" jdbcType="INTEGER" />
+        <result column="has_read" property="hasRead" jdbcType="INTEGER" />
+        <result column="store_id" property="storeId" jdbcType="INTEGER" />
+        <result column="create_on" property="createon" jdbcType="VARCHAR"/>
+        <result column="update_on" property="updateon" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="teletext_id" property="teletextId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, media_id, msg_id, msg_status, sent_count, error_count, has_read,
+        store_id, create_on, update_on, state, teletext_id
+    </sql>
+    <sql id="tableName">wx_media_logs</sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from <include refid="tableName"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectByStore" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from <include refid="tableName"/>
+        where store_id = #{storeId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from <include refid="tableName"/>
+        where id = #{id}
+    </delete>
+
+    <insert id="insertSelective" parameterType="com.bear.web.entity.WxMediaLogs" >
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        insert into <include refid="tableName"/>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="mediaId != null" >
+                media_id,
+            </if>
+            <if test="createon != null" >
+                create_on,
+            </if>
+            <if test="updateon != null" >
+                update_on,
+            </if>
+            <if test="state != null" >
+                state,
+            </if>
+            <if test="msgId != null" >
+                msg_id,
+            </if>
+            <if test="msgStatus != null" >
+                msg_status,
+            </if>
+            <if test="sentCount != null" >
+                sent_count,
+            </if>
+            <if test="errorCount != null" >
+                error_count,
+            </if>
+            <if test="hasRead != null" >
+                has_read,
+            </if>
+            <if test="storeId != null" >
+                store_id,
+            </if>
+            <if test="teletextId != null" >
+                teletext_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id},
+            </if>
+            <if test="mediaId != null" >
+                #{mediaId},
+            </if>
+            <if test="createon != null" >
+                #{createon},
+            </if>
+            <if test="updateon != null" >
+                #{updateon},
+            </if>
+            <if test="state != null" >
+                #{state},
+            </if>
+            <if test="msgId != null" >
+                #{msgId},
+            </if>
+            <if test="msgStatus != null" >
+                #{msgStatus},
+            </if>
+            <if test="sentCount != null" >
+                #{sentCount},
+            </if>
+            <if test="errorCount != null" >
+                #{errorCount},
+            </if>
+            <if test="hasRead != null" >
+                #{hasRead},
+            </if>
+            <if test="storeId != null" >
+                #{storeId},
+            </if>
+            <if test="teletextId != null" >
+                #{teletextId},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.bear.web.entity.WxMediaLogs" >
+        update <include refid="tableName"/>
+        <set >
+            <if test="mediaId != null" >
+               media_id = #{mediaId},
+            </if>
+            <if test="createon != null" >
+                create_on = #{createon},
+            </if>
+            <if test="updateon != null" >
+               update_on = #{updateon},
+            </if>
+            <if test="state != null" >
+                state = #{state},
+            </if>
+            <if test="msgId != null" >
+                msg_id = #{msgId},
+            </if>
+            <if test="msgStatus != null" >
+                msg_status = #{msgStatus},
+            </if>
+            <if test="sentCount != null" >
+                sent_count = #{sentCount},
+            </if>
+            <if test="errorCount != null" >
+                error_count = #{errorCount},
+            </if>
+            <if test="hasRead != null" >
+                has_read = #{hasRead},
+            </if>
+            <if test="storeId != null" >
+                store_id = #{storeId},
+            </if>
+            <if test="teletextId != null" >
+                teletext_id = #{teletextId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <insert id="insertByList" parameterType="java.util.List">
+        insert into <include refid="tableName"/>
+        (media_id, msg_id, store_id, create_on, update_on, state, teletext_id )
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator="union all">
+            select
+            <trim suffixOverrides=",">
+                #{item.mediaId},
+                #{item.msgId},
+                #{item.storeId},
+                #{item.createon},
+                #{item.updateon},
+                #{item.state},
+                #{item.teletextId}
+            </trim>
+        </foreach>
+    </insert>
+
+</mapper>

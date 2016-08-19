@@ -1,0 +1,27 @@
+{
+  "name": "bear-fe",
+  "version": "0.0.0",
+  "authors": [
+    "tang hong"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "app/bower_components"
+  ],
+  "dependencies": {
+    "angular": "1.5.8",
+    "jquery": "~3.1.0",
+    "bootstrap": "~3.3.7",
+    "angular-bootstrap": "~2.0.1"
+  },
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "homepage": "",
+  "private": true
+}
