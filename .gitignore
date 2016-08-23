@@ -1,0 +1,8 @@
+/bear-be/target/
+/bear-be/.idea/
+/bear-fe/.idea/*
+/bear-fe/dist/
+.idea/
+*.iml
+*.DS_Store
+
