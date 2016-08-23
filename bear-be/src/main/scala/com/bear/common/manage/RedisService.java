@@ -27,7 +27,7 @@ import redis.clients.util.Pool;
 @Service
 public class RedisService {
     /** redis连接池对象 */
-    @Autowired 
+    @Autowired
     private Pool<Jedis> jedisPool;
     
     /** 日志记录对象 */
