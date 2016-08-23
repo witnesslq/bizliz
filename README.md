@@ -1,3 +1,2 @@
-# meiqi project
-scala + springboot 
+# scala + springboot + mongodb 
 
