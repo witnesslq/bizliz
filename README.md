@@ -1,3 +1,2 @@
-# meiqi project
-this is my meiqi project 
+# scala + springboot + mongodb 
 
