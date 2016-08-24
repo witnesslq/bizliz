@@ -1,4 +1,5 @@
 /bear-be/target/
+/bear-be/data/
 /bear-be/.idea/
 /bear-fe/.idea/*
 /bear-fe/dist/

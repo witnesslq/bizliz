@@ -41,13 +41,6 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <version>${spring-boot.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring-boot.version}</version>
         </dependency>
@@ -55,12 +48,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-redis</artifactId>
-            <version>${spring-boot.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
             <version>${spring-boot.version}</version>
         </dependency>
 
@@ -102,52 +89,12 @@
             <version>${akka.version}</version>
         </dependency>
 
-
         <!--支持使用 JDBC 访问数据库-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
             <version>${spring-boot.version}</version>
         </dependency>
-
-        <!--&lt;!&ndash;java servlet&ndash;&gt;
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>3.0-alpha-1</version>
-        </dependency>-->
-
-        <!-- 接口描述管理插件-->
-        <!--<dependency>
-            <groupId>com.mangofactory</groupId>
-            <artifactId>swagger-springmvc</artifactId>
-            <version>1.0.2</version>
-        </dependency>-->
-
-        <!-- log4j日志包 -->
-        <!-- <dependency>
-             <groupId>org.slf4j</groupId>
-             <artifactId>slf4j-log4j12</artifactId>
-             <version>1.7.5</version>
-         </dependency>-->
-
-        <!--<dependency>
-            <groupId>net.kencochrane.raven</groupId>
-            <artifactId>raven</artifactId>
-            <version>6.0.0</version>
-        </dependency>-->
 
         <!--monitor-->
         <dependency>
@@ -163,34 +110,10 @@
             <version>3.4.0</version>
         </dependency>
 
-        <!--<dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-scala_2.11</artifactId>
-            <version>2.7.4</version>
-        </dependency>-->
-
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.13</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
 
         <!--html parser-->
@@ -278,25 +201,25 @@
         <!--scala simple function library-->
         <dependency>
             <groupId>org.scalaz</groupId>
-            <artifactId>scalaz-core_2.11</artifactId>
+            <artifactId>scalaz-core_${scala.version}</artifactId>
             <version>${scalaz.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.scalaz</groupId>
-            <artifactId>scalaz-effect_2.11</artifactId>
+            <artifactId>scalaz-effect_${scala.version}</artifactId>
             <version>${scalaz.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.scalaz</groupId>
-            <artifactId>scalaz-scalacheck-binding_2.11</artifactId>
+            <artifactId>scalaz-scalacheck-binding_${scala.version}</artifactId>
             <version>${scalaz.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.scalaz</groupId>
-            <artifactId>scalaz-typelevel_2.11</artifactId>
+            <artifactId>scalaz-typelevel_${scala.version}</artifactId>
             <version>7.1.8</version>
         </dependency>
     </dependencies>

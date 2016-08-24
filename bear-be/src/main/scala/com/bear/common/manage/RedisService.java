@@ -8,9 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bear.common.consts.WxApp;
-import com.bear.common.utils.cla.DateUtil;
-
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Response;
@@ -125,55 +122,6 @@ public class RedisService {
         }
     }
     
-    
-    /**
-     * 乐观锁
-    * @author 王大爷
-    * @date 2015年9月18日 下午7:58:52
-    * @param key 贱
-    * @param storeId 门店标识
-    * @param field field
-    * @return String
-     */
-    public String watchSet(String key, Integer storeId, String field) {
-        Jedis jedis = null;
-        boolean isBroken = false;
-        try {
-            jedis = this.getJedis();
-            jedis.watch(WxApp.Redis$.MODULE$.GET_ORDER_CODE() + String.valueOf(storeId));
-            String numString = jedis.hget(WxApp.Redis$.MODULE$.GET_ORDER_CODE() + String.valueOf(storeId), field);
-            String values = null;
-            int a = 0;
-            if ("order_info".equals(field)) {
-                if (!numString.substring(0, 8).equals(DateUtil.getCurDateString())) {
-                    values = DateUtil.getCurDateString() + "0001";
-                    a = 1;
-                }
-                else {
-                    values = String.valueOf(Long.parseLong(numString) + 1);
-                }
-            }
-            else {
-                values = String.valueOf(Long.parseLong(numString) + 1);
-            }
-            Transaction tx = jedis.multi();
-            Response<Long> retObj = tx.hset(key, field, values);
-            tx.exec();
-            retObj.get();
-            if (a == 1) {
-                //初始化订单明细编码
-                jedis.hset(WxApp.Redis$.MODULE$.GET_ORDER_CODE() + String.valueOf(storeId), "order_detail", "0");
-            }
-            return values;
-        }
-        catch (Exception e) {
-            isBroken = true;
-        }
-        finally {
-            release(jedis, isBroken);
-        }
-        return null;
-    }
     
     /**
      * 设置key-value并设置过期时间（单位：秒），设置key对应字符串value，并且设置key在给定的seconds时间之后超时过期
@@ -1246,82 +1194,6 @@ public class RedisService {
             release(jedis, isBroken);
         }
         return null;
-    }
-    
-    
-    /**
-     * 乐观锁
-    * @author 王大爷
-    * @date 2015年9月18日 下午7:58:52
-    * @param key 贱
-    * @param storeId 门店标识
-    * @return String
-     */
-    public String watchSet(String key, Integer storeId) {
-        Jedis jedis = null;
-        boolean isBroken = false;
-        try {
-            jedis = this.getJedis();
-            jedis.watch(WxApp.Redis$.MODULE$.GET_ORDER_CODE() + String.valueOf(storeId));
-            String numString = jedis.get(WxApp.Redis$.MODULE$.GET_ORDER_CODE() + String.valueOf(storeId));
-            Response<String> retObj = null;
-            String values = null;
-            if (!numString.substring(0, 8).equals(DateUtil.getCurDateString())) {
-                Transaction tx = jedis.multi();
-                retObj = tx.set(key, numString);
-                tx.exec();
-                values = numString;
-            } 
-            else {
-                long valueString =  Long.parseLong(numString) + 1;
-                Transaction tx = jedis.multi();
-                retObj = tx.set(key, String.valueOf(valueString));
-                tx.exec();
-                values = String.valueOf(valueString);
-            }
-            String ret = retObj.get();
-            if ("OK".equals(ret)) {
-                return values;
-            }
-        }
-        catch (Exception e) {
-            isBroken = true;
-        }
-        finally {
-            release(jedis, isBroken);
-        }
-        return null;
-    }
-    
-    
-    /**
-     * 存储用户的访问口令、设备类型、设备标识
-    * @author 张进军
-    * @date Sep 24, 2015 4:18:17 PM
-    * @param userId         用户标识
-    * @param token          访问口令
-    * @param deviceType     设备类型
-    * @param deviceToken    设备标识
-     */
-    public void setMultiToken(String userId, String token, String deviceType, String deviceToken) {
-        Jedis jedis = null;
-        boolean isBroken = false;
-        try {
-            jedis = this.getJedis();
-            Transaction transaction = jedis.multi();
-            transaction.hdel(WxApp.Redis$.MODULE$.APP_USER_TOKEN_KEY_HASH(), userId);
-            transaction.hset(WxApp.Redis$.MODULE$.APP_TOKEN_USER_KEY_HASH(), token, userId);
-            transaction.hset(WxApp.Redis$.MODULE$.APP_TOKEN_DEVICE_TYPE_KEY_HASH(), token, deviceType);
-            transaction.hset(WxApp.Redis$.MODULE$.APP_TOKEN_DEVICE_TOKEN_KEY_HASH(), token, deviceToken);
-            transaction.hset(WxApp.Redis$.MODULE$.APP_USER_TOKEN_KEY_HASH(), userId, token);
-            transaction.exec();
-        }
-        catch (Exception e) {
-            isBroken = true;
-        }
-        finally {
-            release(jedis, isBroken);
-        }
     }
     
 }
