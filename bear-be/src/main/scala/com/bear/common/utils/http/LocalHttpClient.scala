@@ -4,7 +4,6 @@ package http
 
 import java.io.{File, InputStream}
 
-import com.bear.common.api.dto._
 import com.bear.common.exception.WeixinException
 import com.bear.common.utils.cla.ConvertUitls
 import org.apache.http.client.methods.{HttpPost, HttpUriRequest}

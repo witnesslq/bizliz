@@ -232,12 +232,12 @@ object Url {
 
   }
 
-  object WxPlatForm{
-    final val VERIFY_AUTH = "/wechat/verify/auth"
-    final val PLATFORM_CENTER = "/wechat/eventmsg/{appId}"
-    final val SERVICE_CALL_BACK = "/wechat/auth/servecallback/store/{storeId}"
-    final val PLATFORM_MAIL_BOX = "/wechat/receive/mail/info"
-    final val AUTH_ADDRESS = "/wechat/auth/store/{storeId}/touch"
+  object Habits{
+    final val ADD_HABIT_TYPE_INFO = "/habit/type/add/info"
+
+    final val SHOW_HABIT_INFO = "/habit/show/info"
+
+    final val SHOW_INFO = "/show/info"
   }
 
 

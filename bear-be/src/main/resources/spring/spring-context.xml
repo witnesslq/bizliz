@@ -5,6 +5,7 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
        xmlns:mongo="http://www.springframework.org/schema/data/mongo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -14,6 +15,7 @@
        		http://www.springframework.org/schema/context/spring-context.xsd
             http://www.springframework.org/schema/data/mongo
             http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+            http://www.springframework.org/schema/data/elasticsearch http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch.xsd
        		http://www.springframework.org/schema/aop
 			http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 			http://www.springframework.org/schema/tx
@@ -71,12 +73,39 @@
 
     <mongo:db-factory dbname="bear" mongo-ref="mongo" id="bearFactory"/>
 
+    <bean id="mongoMapperContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+
+    <bean id="defaultMongoTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">
+        <constructor-arg name="typeKey"><null/></constructor-arg>
+    </bean>
+
+    <bean id="mapperMongoConvert" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <constructor-arg  name="mongoDbFactory" ref="bearFactory" />
+        <constructor-arg name="mappingContext" ref="mongoMapperContext"/>
+        <property name="typeMapper" ref="defaultMongoTypeMapper"/>
+    </bean>
+
     <bean id="bearTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg  name="mongoDbFactory" ref="bearFactory" />
+        <constructor-arg name="mongoConverter" ref="mapperMongoConvert"/>
     </bean>
 
     <bean id="aiTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg name="mongoDbFactory" ref="aiFactory"/>
     </bean>
+
+    <!-- elasticSearch 配置 -->
+
+    <elasticsearch:node-client id="client" local="true"/>
+
+    <bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+        <constructor-arg name="client" ref="client"/>
+    </bean>
+
+    <!--<elasticsearch:transport-client id="client" cluster-nodes="192.168.3.86:9301" cluster-name="elasticsearch_Apple" />
+
+    <bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+        <constructor-arg name="client" ref="client"/>
+    </bean>-->
 
 </beans>
