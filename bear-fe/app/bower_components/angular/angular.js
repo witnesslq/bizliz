@@ -3944,7 +3944,7 @@ function annotate(fn, strictDi, name) {
   if (typeof fn === 'function') {
     if (!($inject = fn.$inject)) {
       $inject = [];
-      if (fn.length) {
+      if (fn.length) {  
         if (strictDi) {
           if (!isString(name) || !name) {
             name = fn.name || anonFn(fn);
