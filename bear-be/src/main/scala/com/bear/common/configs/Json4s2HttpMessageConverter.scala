@@ -2,6 +2,8 @@ package com.bear
 package common
 package configs
 
+import java.nio.charset.Charset
+
 import utils.JsonUtils._
 import org.json4s._
 import org.json4s.Extraction
@@ -51,8 +53,7 @@ class Json4s2HttpMessageConverter[T <: AnyRef] extends AbstractHttpMessageConver
 
   override def writeInternal(t: T, outputMessage: HttpOutputMessage): Unit = {
     val out = outputMessage.getBody
-    val res = writeAny[T](t).getBytes
-    StreamUtils.copy(res, out)
+    StreamUtils.copy(writeAny(t), Charset.forName("UTF-8"), out)
     out.flush()
   }
 

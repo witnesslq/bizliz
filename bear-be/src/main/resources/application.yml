@@ -1,0 +1,31 @@
+# logging
+logging:
+ config: classpath:spring/logback.xml
+
+#thymeleaf
+#spring.thymeleaf.content-type=text/html
+#spring.thymeleaf.encoding=UTF-8
+#spring.thymeleaf.prefix=/project.build.directory/
+#spring.thymeleaf.mode=HTML5
+#spring.thymeleaf.cache=true
+
+spring:
+  profiles: dev
+  data:
+    mongo:
+      host: 127.0.0.1
+      port: 27017
+
+    elasticsearch:
+      cluster-nodes: 127.0.0.1:9300
+      cluster-name: bear_elastic
+server:
+  port: 8093
+
+
+---
+spring:
+  profiles: prod
+
+server:
+  port: 8096

@@ -22,6 +22,7 @@
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
             <charset>utf8</charset>
         </encoder>
+
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -32,7 +33,7 @@
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily 配置日志所生成的目录以及生成文件名的规则 -->
-            <fileNamePattern>${user.home}/logs/wechat_platform-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${user.home}/logs/bear-be-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <!-- or whenever the file size reaches 64 MB -->
@@ -53,11 +54,6 @@
         <appender-ref ref="CONSOLE"/>
     </root>
 
-  <!--  <root level="DEBUG">
-        <appender-ref ref="FILE"/>
-        <appender-ref ref="CONSOLE"/>
-    </root>-->
-
     <logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR"/>
     <logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
     <logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"/>
@@ -71,12 +67,10 @@
     <logger name="org.springframework.boot.actuate.endpoint.jmx" additivity="false">
         <appender-ref ref="DEBUG_LEVEL_REMAPPER"/>
     </logger>
-    <logger name="com.ibatis" level="DEBUG"/>
-    <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG"/>
-    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG"/>
-    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG"/>
+    <!--<logger name="com.marketing.web.mapper" level="DEBUG"/>-->
     <logger name="java.sql.Connection" level="DEBUG"/>
     <logger name="java.sql.Statement" level="DEBUG"/>
     <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+
 
 </configuration>

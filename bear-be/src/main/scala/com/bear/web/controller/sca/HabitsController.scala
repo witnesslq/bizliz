@@ -24,8 +24,8 @@ import scala.collection.JavaConversions._
   allowCredentials = "false")
 class HabitsController {
 
-  @Autowired
-  @BeanProperty var elasticsearchTemplate: ElasticsearchTemplate = _
+  /*@Autowired
+  @BeanProperty var elasticsearchTemplate: ElasticsearchTemplate = _*/
 
   @RequestMapping(value = Array(Url.Habits.ADD_HABIT_TYPE_INFO), method = Array(RequestMethod.GET))
   def add = {
@@ -38,7 +38,7 @@ class HabitsController {
     HabitTypes.find
   }
 
-  @RequestMapping(value = Array(Url.Habits.SHOW_INFO), method = Array(RequestMethod.GET))
+  /*@RequestMapping(value = Array(Url.Habits.SHOW_INFO), method = Array(RequestMethod.GET))
   def find: String = {
     val foo = new Person();
     foo.setName("Foo");
@@ -70,7 +70,7 @@ class HabitsController {
     }
     ""
 
-  }
+  }*/
 
 
 

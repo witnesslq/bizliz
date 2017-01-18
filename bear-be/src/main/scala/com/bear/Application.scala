@@ -5,16 +5,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration
-import org.springframework.boot.context.embedded.ServletRegistrationBean
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.web.servlet.ServletRegistrationBean
 import org.springframework.context.annotation.{Bean, ImportResource}
 import org.springframework.web.servlet.DispatcherServlet
+
+import scala.collection.JavaConverters._
 
 /**
   * Created by Apple on 16/6/2.
   */
 @SpringBootApplication(exclude= Array(classOf[DataSourceAutoConfiguration], classOf[MongoDataAutoConfiguration]))
 //@PropertySource(Array("classpath:properties/application.properties"))
-@ImportResource(Array("classpath:spring/spring-context.xml"))
+//@ImportResource(Array("classpath:spring/spring-context.xml"))
+@ConfigurationProperties(prefix="server",locations=Array("classpath:application.yml"))
 class Application{
   @Bean
   def dispatchServlet: DispatcherServlet = {
@@ -30,7 +34,9 @@ class Application{
 }
 
 object AppMain{
+  import scala.collection.JavaConverters._
   def main(args: Array[String]) {
+    System.setProperty("spring.config.name", "application")
     SpringApplication.run(classOf[Application])
   }
 }

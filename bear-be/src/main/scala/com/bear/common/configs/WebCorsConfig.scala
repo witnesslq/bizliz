@@ -14,8 +14,9 @@ class WebCorsConfig extends WebMvcConfigurerAdapter{
   override def addCorsMappings(registry: CorsRegistry) = {
     registry.addMapping("/**")
       .allowedOrigins("*")
-      .allowedHeaders("Content-Type")
-      .allowCredentials(false).maxAge(3600)
+      .allowedHeaders("*")
+      .allowedMethods("*")
+      .allowCredentials(true).maxAge(3600)
   }
 
 }

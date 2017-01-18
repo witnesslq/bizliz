@@ -50,33 +50,33 @@ object HabitTypes{
   @Autowired
   @BeanProperty var bearTemplate: MongoTemplate = _
 
-  @Autowired
-  @BeanProperty var elasticsearchTemplate: ElasticsearchTemplate = _
+  /*@Autowired
+  @BeanProperty var elasticsearchTemplate: ElasticsearchTemplate = _*/
 
   def add = {
-    val n = new HabitTypes("阅读类型", "33333")
+    val n = new HabitTypes("阅读类型11111", "33333")
     bearTemplate.insert(n, "habit_types")
-    val indexQuery = new IndexQuery();
+   /* val indexQuery = new IndexQuery();
     indexQuery.setId(n.getId());
-    indexQuery.setObject(n);
+    indexQuery.setObject(n);*/
 
     //elasticsearchTemplate.putMapping("habit_types", "habit", classOf[HabitTypes])
-    val doc = elasticsearchTemplate.index(indexQuery)
+    //val doc = elasticsearchTemplate.index(indexQuery)
 
 
     "11111"
   }
 
   def find = {
-    //bearTemplate.find(new Query(), classOf[HabitTypes], "habit_types")
-    println("111111111111")
+    val list = bearTemplate.find(new Query(), classOf[HabitTypes], "habit_types")
+    /*println("111111111111")
     val searchQuery = new NativeSearchQueryBuilder().build()
     val qf = elasticsearchTemplate.queryForList(searchQuery, classOf[HabitTypes])
     println(elasticsearchTemplate.indexExists("habit_types"))
     qf.foreach{ f =>
       println(f.name)
-    }
-    ResultDto(0, qf)
+    }*/
+    ResultDto(0, list.map(_.name))
   }
 
 }

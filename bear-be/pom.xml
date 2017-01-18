@@ -11,10 +11,10 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <scala.version>2.12.0-M4</scala.version>
-        <scalaz.version>7.3.0-M3</scalaz.version>
-        <spring-boot.version>1.3.5.RELEASE</spring-boot.version>
-        <akka.version>2.4.6</akka.version>
+        <scala.version>2.12.0</scala.version>
+        <scalaz.version>7.3.0-M8</scalaz.version>
+        <spring-boot.version>1.4.3.RELEASE</spring-boot.version>
+        <akka.version>2.4.12</akka.version>
         <http-client.version>4.5.2</http-client.version>
         <jackson.version>2.7.4</jackson.version>
     </properties>
@@ -79,13 +79,13 @@
         <!--akka-->
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-actor_${scala.version}</artifactId>
+            <artifactId>akka-actor_2.12</artifactId>
             <version>${akka.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-slf4j_${scala.version}</artifactId>
+            <artifactId>akka-slf4j_2.12</artifactId>
             <version>${akka.version}</version>
         </dependency>
 
@@ -100,20 +100,54 @@
         <dependency>
             <groupId>net.bull.javamelody</groupId>
             <artifactId>javamelody-core</artifactId>
-            <version>1.60.0</version>
+            <version>1.63.0</version>
+            <!--<exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-core</artifactId>
+                </exclusion>
+            </exclusions>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.7</version>
         </dependency>
 
         <!--json-->
         <dependency>
             <groupId>org.json4s</groupId>
-            <artifactId>json4s-native_${scala.version}</artifactId>
-            <version>3.4.0</version>
+            <artifactId>json4s-native_2.12</artifactId>
+            <version>3.5.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.13</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
         <!--html parser-->
@@ -159,6 +193,70 @@
             <version>${http-client.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>us.codecraft</groupId>
+            <artifactId>webmagic-core</artifactId>
+            <version>0.6.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jsoup</groupId>
+                    <artifactId>jsoup</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.jayway.jsonpath</groupId>
+                    <artifactId>json-path</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>us.codecraft</groupId>
+            <artifactId>webmagic-selenium</artifactId>
+            <version>0.5.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-java</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>us.codecraft</groupId>
+                    <artifactId>webmagic-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>us.codecraft</groupId>
+            <artifactId>webmagic-extension</artifactId>
+            <version>0.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+
         <!-- 文件上传 -->
         <dependency>
             <groupId>commons-io</groupId>
@@ -177,6 +275,12 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope> <!--依赖范围compile, test, runtime-->
+        </dependency>
+
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>4.1.0</version>
         </dependency>
 
         <!--scala library-->
@@ -201,27 +305,28 @@
         <!--scala simple function library-->
         <dependency>
             <groupId>org.scalaz</groupId>
-            <artifactId>scalaz-core_${scala.version}</artifactId>
+            <artifactId>scalaz-core_2.12</artifactId>
             <version>${scalaz.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.scalaz</groupId>
-            <artifactId>scalaz-effect_${scala.version}</artifactId>
+            <artifactId>scalaz-effect_2.12</artifactId>
             <version>${scalaz.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.scalaz</groupId>
-            <artifactId>scalaz-scalacheck-binding_${scala.version}</artifactId>
-            <version>${scalaz.version}</version>
+            <artifactId>scalaz-scalacheck-binding_2.12</artifactId>
+            <version>7.3.0-M8</version>
         </dependency>
 
         <dependency>
             <groupId>org.scalaz</groupId>
-            <artifactId>scalaz-typelevel_${scala.version}</artifactId>
-            <version>7.1.8</version>
+            <artifactId>scalaz-typelevel_2.12</artifactId>
+            <version>7.1.11</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -483,6 +588,7 @@
                     <include>**/*.xml</include>
                     <include>**/*.tld</include>
                     <include>**/*.html</include>
+                    <include>**/*.yml</include>
                     <include>**/templates/*.html</include>
                 </includes>
                 <filtering>true</filtering>
@@ -493,6 +599,7 @@
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
                     <include>**/*.tld</include>
+                    <include>**/*.yml</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
@@ -505,6 +612,7 @@
                     <include>**/*.html</include>
                     <include>**/*.css</include>
                     <include>**/*.js</include>
+                    <include>**/*.yml</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>
