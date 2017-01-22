@@ -17,10 +17,10 @@ import scala.beans.BeanProperty
 @Configuration
 @PropertySource(Array("classpath:application.yml"))
 class ElasticConfig {
-  @Value("${spring.data.mongo.cluster-name}")
+  @Value("${spring.data.elasticsearch.cluster-name}")
   @BeanProperty var clusterName: String =_
 
-  @Value("${spring.data.mongo.cluster-nodes}")
+  @Value("${spring.data.elasticsearch.cluster-nodes}")
   @BeanProperty var clusterNodes: String = _
 
   @Bean
