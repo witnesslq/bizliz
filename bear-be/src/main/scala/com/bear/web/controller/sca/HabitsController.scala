@@ -37,7 +37,7 @@ class HabitsController {
 
   @RequestMapping(value = Array(Url.Habits.ADD_HABIT_TYPE_INFO), method = Array(RequestMethod.GET))
   def add = {
-    kafkaTemplate.setDefaultTopic("testTopic")
+    kafkaTemplate.setDefaultTopic("mySparkTopic")
     kafkaTemplate.sendDefault(2, "hello world")
    /* val sd = new SeleniumDownloader("/Users/Apple/tool/driver/chromedriver")
     sd.setSleepTime(5000)

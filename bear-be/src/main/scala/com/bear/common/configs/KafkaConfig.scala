@@ -60,15 +60,14 @@ class KafkaConfig {
     new DefaultKafkaConsumerFactory[Int, String](mapAsJavaMap(props))
   }
 
-  @Bean
+ /* @Bean
   def kafkaMessageListenerContainer: KafkaMessageListenerContainer[Int, String] = {
     val testTopic = "testTopic"
     val factory = new KafkaMessageListenerContainer[Int, String](consumerFactory, new ContainerProperties(testTopic))
     factory.setupMessageListener(beanFactoryManage.getBean[KafkaService]("kafkaService"))
-    factory.setBeanName()
     factory.start()
     factory
-  }
+  }*/
 
   @Bean
   def kafkaListenerContainerFactory:
@@ -77,7 +76,6 @@ class KafkaConfig {
       factory.setConsumerFactory(consumerFactory)
       factory.setConcurrency(3)
       factory.getContainerProperties.setPollTimeout(3000)
-    factory.createListenerContainer()
       factory
   }
 
