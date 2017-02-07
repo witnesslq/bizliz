@@ -33,8 +33,8 @@ public class HuabanProcessor implements PageProcessor {
 
     public static void main(String[] args) {
         Spider.create(new HuabanProcessor()).thread(5)
-                .pipeline(new FilePipeline("/Users/Apple/tool/test/"))
-                .downloader(new SeleniumDownloader("/Users/Apple/tool/driver/chromedriver"))
-                .run();
+        .pipeline(new FilePipeline("/Users/Apple/tool/test/"))
+        .downloader(new SeleniumDownloader("/Users/Apple/tool/driver/chromedriver"))
+        .run();
     }
 }

@@ -37,9 +37,9 @@ class HabitsController {
 
   @RequestMapping(value = Array(Url.Habits.ADD_HABIT_TYPE_INFO), method = Array(RequestMethod.GET))
   def add = {
-    kafkaTemplate.setDefaultTopic("mySparkTopic")
-    kafkaTemplate.sendDefault(2, "hello world")
-   /* val sd = new SeleniumDownloader("/Users/Apple/tool/driver/chromedriver")
+   /* kafkaTemplate.setDefaultTopic("mySparkTopic")
+    kafkaTemplate.sendDefault(2, "hello world")*/
+    val sd = new SeleniumDownloader("/Users/Apple/tool/driver/chromedriver")
     sd.setSleepTime(5000)
     (580 to 618).foreach{ f =>
       Spider.create(new InvestorPageProcessor)
@@ -47,8 +47,7 @@ class HabitsController {
         //.setDownloader(sd)
         .setPipelines(java.util.Arrays.asList(new InvestPipeline()))
         .run()
-    }*/
-    ""
+    }
   }
 
   @RequestMapping(value = Array(Url.Habits.SHOW_HABIT_INFO), method = Array(RequestMethod.GET))
